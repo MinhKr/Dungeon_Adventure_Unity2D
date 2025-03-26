@@ -230,9 +230,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7eeff6c0d1c0e43468029a8926d52e1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 6
+  moveSpeed: 8
   jumpForce: 14
-  isGrounded: 0
+  doubleJumpForce: 11
   groundCheckDistance: 0.8
   whatIsGround:
     serializedVersion: 2
