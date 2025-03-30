@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -13,6 +14,10 @@ public class Player : MonoBehaviour
 
     private bool canDoubleJump;
 
+    [Header("Wall Jump Properties")]
+    [SerializeField] private float wallJumpDuration;
+    [SerializeField] private Vector2 wallJumpForce;
+    private bool isWallJumping;
 
     [Header("Collision Properties")]
     [SerializeField] private float groundCheckDistance;
@@ -62,7 +67,7 @@ public class Player : MonoBehaviour
 
         if (canWallSlide == false)
             return;
-
+        
         rb.linearVelocity = new Vector2(rb.linearVelocityX, rb.linearVelocityY * yModifier);
  
     }
@@ -84,8 +89,30 @@ public class Player : MonoBehaviour
 
     private void DoubleJump()
     {
+        isWallJumping = false;
         canDoubleJump = false;
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, doubleJumpForce);
+    }
+
+    private void WallJump()
+    {
+        canDoubleJump = true;
+
+        rb.linearVelocity = new Vector2(wallJumpForce.x * -facingDirection, wallJumpForce.y);
+
+        Flip();
+
+        StopAllCoroutines();
+        StartCoroutine(WallJumpCooldown());
+    }
+
+    private IEnumerator WallJumpCooldown()
+    {
+        isWallJumping = true;
+
+        yield return new WaitForSeconds(wallJumpDuration);
+
+        isWallJumping = false;
     }
 
     private void JumpButton()
@@ -95,6 +122,8 @@ public class Player : MonoBehaviour
             canDoubleJump = true;
             Jump();
         }
+        else if (isWallDetected && !isGrounded)
+            WallJump();
         else if (canDoubleJump)
             DoubleJump();
     }
@@ -104,13 +133,16 @@ public class Player : MonoBehaviour
         if (isWallDetected)
             return;
 
+        if (isWallJumping)
+            return;
+
         rb.linearVelocity = new Vector2(xInput * moveSpeed, rb.linearVelocityY);
     }
 
     private void HandleAnimations()
     {
         anim.SetFloat("xVelocity", rb.linearVelocityX);
-        anim.SetFloat("yVelocity", rb.linearVelocity.y);
+        anim.SetFloat("yVelocity", rb.linearVelocityY);
         anim.SetBool("isGrounded", isGrounded);
         anim.SetBool("isWallDetected", isWallDetected);
     }

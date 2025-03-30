@@ -233,6 +233,8 @@ MonoBehaviour:
   moveSpeed: 8
   jumpForce: 14
   doubleJumpForce: 11
+  wallJumpDuration: 0.6
+  wallJumpForce: {x: 7, y: 14}
   groundCheckDistance: 0.8
   wallCheckDistance: 0.64
   whatIsGround:
