@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class Player : MonoBehaviour
 {
@@ -18,6 +19,12 @@ public class Player : MonoBehaviour
     [SerializeField] private float wallJumpDuration;
     [SerializeField] private Vector2 wallJumpForce;
     private bool isWallJumping;
+
+    [Header("KnockBack")]
+    [SerializeField] private Vector2 knockBackPower;
+    [SerializeField] private float knockBackDuration;
+    private bool isKnocked;
+    private bool canBeKnocked;
 
     [Header("Collision Properties")]
     [SerializeField] private float groundCheckDistance;
@@ -47,6 +54,12 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.K))
+            KnockBack();
+
+        if (isKnocked)
+            return;
+
         HandleInput();
 
         HandleWallSlide();
@@ -58,6 +71,16 @@ public class Player : MonoBehaviour
         HandleCollision();
 
         HandleAnimations();
+    }
+
+    public void KnockBack()
+    {
+        if (isKnocked)
+            return;
+
+        StartCoroutine(KnockBackCooldown());
+        anim.SetTrigger("knockback");
+        rb.linearVelocity = new Vector2(knockBackPower.x * -facingDirection, knockBackPower.y);
     }
 
     private void HandleWallSlide()
@@ -113,6 +136,17 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(wallJumpDuration);
 
         isWallJumping = false;
+    }
+
+    private IEnumerator KnockBackCooldown()
+    {
+        canBeKnocked = false;
+        isKnocked = true;
+
+        yield return new WaitForSeconds(knockBackDuration);
+
+        isKnocked = false;
+        canBeKnocked = true;
     }
 
     private void JumpButton()
