@@ -1,0 +1,21 @@
+using UnityEngine;
+
+public class GameManager : MonoBehaviour
+{
+    public static GameManager instance;
+
+    public int fruitCollected;
+
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
+    }
+
+    public void AddFruit()
+    {
+        fruitCollected++;
+    }
+}
