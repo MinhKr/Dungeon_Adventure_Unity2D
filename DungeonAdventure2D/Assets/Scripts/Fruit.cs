@@ -3,7 +3,7 @@ using UnityEngine;
 public class Fruit : MonoBehaviour
 {
     private GameManager gameManager;
-    [SerializeField] GameObject pickupVFX;
+    [SerializeField] GameObject pickupVfx;
 
     private void Start()
     {
@@ -18,10 +18,7 @@ public class Fruit : MonoBehaviour
         {
             gameManager.AddFruit();
             Destroy(gameObject);
-
-            GameObject newVfx = Instantiate(pickupVFX, transform.position, Quaternion.identity);
-
-            Destroy(newVfx, .5f);
+            GameObject newPickupVfx = Instantiate(pickupVfx, transform.position, Quaternion.identity);
         }
     }
 }

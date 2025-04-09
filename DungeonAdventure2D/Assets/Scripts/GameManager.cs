@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -6,12 +7,25 @@ public class GameManager : MonoBehaviour
 
     public int fruitCollected;
 
+    [Header("Player")]
+    [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private Transform spawnPoint;
+    [SerializeField] private float spawnDelay;
+
     private void Awake()
     {
         if (instance == null)
             instance = this;
         else
             Destroy(gameObject);
+    }
+
+    public void SpawnPlayer() => StartCoroutine(SpawnCouroutine());
+
+    private IEnumerator SpawnCouroutine()
+    {
+        yield return new WaitForSeconds(spawnDelay);
+        GameObject newPlayer = Instantiate(playerPrefab, spawnPoint.position, Quaternion.identity);
     }
 
     public void AddFruit()

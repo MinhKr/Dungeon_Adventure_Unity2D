@@ -1,17 +1,18 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
 public class Player : MonoBehaviour
 {
     private Rigidbody2D rb;
     private Animator anim;
 
+    private bool canBeControlled = false;
+
     [Header("Movement Properties")]
     [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpForce;
     [SerializeField] private float doubleJumpForce;
+    private float defaultGravityScale;
 
     private bool canDoubleJump;
 
@@ -39,6 +40,9 @@ public class Player : MonoBehaviour
     private bool facingRight = true;
     private int facingDirection = 1;
 
+    [Header("VFX")]
+    [SerializeField] private GameObject deathVfx;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
@@ -48,14 +52,15 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
-        
+        defaultGravityScale = rb.gravityScale;
+        RespawnFinished(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.K))
-            KnockBack();
+        if(canBeControlled == false)
+            return;
 
         if (isKnocked)
             return;
@@ -73,6 +78,21 @@ public class Player : MonoBehaviour
         HandleAnimations();
     }
 
+    public void RespawnFinished(bool finished)
+    {
+        if (finished)
+        {
+            rb.gravityScale = defaultGravityScale;
+            canBeControlled = true;
+        }
+        else
+        {
+            rb.gravityScale = 0;
+            canBeControlled = false;
+        }
+    }
+
+    //Knockback
     public void KnockBack()
     {
         if (isKnocked)
@@ -82,62 +102,6 @@ public class Player : MonoBehaviour
         anim.SetTrigger("knockback");
         rb.linearVelocity = new Vector2(knockBackPower.x * -facingDirection, knockBackPower.y);
     }
-
-    private void HandleWallSlide()
-    {
-        bool canWallSlide = isWallDetected && rb.linearVelocity.y < 0;
-        float yModifier = yInput < 0 ? 1 : .5f;
-
-        if (canWallSlide == false)
-            return;
-        
-        rb.linearVelocity = new Vector2(rb.linearVelocityX, rb.linearVelocityY * yModifier);
- 
-    }
-
-    private void HandleInput()
-    {
-        xInput = Input.GetAxisRaw("Horizontal");
-        yInput = Input.GetAxisRaw("Vertical");
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            JumpButton();
-        }
-    }
-    private void Jump()
-    {
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-    }
-
-    private void DoubleJump()
-    {
-        isWallJumping = false;
-        canDoubleJump = false;
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, doubleJumpForce);
-    }
-
-    private void WallJump()
-    {
-        canDoubleJump = true;
-
-        rb.linearVelocity = new Vector2(wallJumpForce.x * -facingDirection, wallJumpForce.y);
-
-        Flip();
-
-        StopAllCoroutines();
-        StartCoroutine(WallJumpCooldown());
-    }
-
-    private IEnumerator WallJumpCooldown()
-    {
-        isWallJumping = true;
-
-        yield return new WaitForSeconds(wallJumpDuration);
-
-        isWallJumping = false;
-    }
-
     private IEnumerator KnockBackCooldown()
     {
         canBeKnocked = false;
@@ -149,9 +113,66 @@ public class Player : MonoBehaviour
         canBeKnocked = true;
     }
 
+    public void Die()
+    {
+        Destroy(gameObject);
+        GameObject newDeathVfx = Instantiate(deathVfx, transform.position, Quaternion.identity);
+    }
+    private void HandleWallSlide()
+    {
+        bool canWallSlide = isWallDetected && rb.linearVelocity.y < 0;
+        float yModifier = yInput < 0 ? 1 : .5f;
+
+        if (canWallSlide == false)
+            return;
+
+        rb.linearVelocity = new Vector2(rb.linearVelocityX, rb.linearVelocityY * yModifier);
+
+    }
+    private void HandleInput()
+    {
+        xInput = Input.GetAxisRaw("Horizontal");
+        yInput = Input.GetAxisRaw("Vertical");
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            JumpButton();
+        }
+    }
+
+    //Jumping
+    private void Jump()
+    {
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+    }
+    private void DoubleJump()
+    {
+        isWallJumping = false;
+        canDoubleJump = false;
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, doubleJumpForce);
+    }
+    private void WallJump()
+    {
+        canDoubleJump = true;
+
+        rb.linearVelocity = new Vector2(wallJumpForce.x * -facingDirection, wallJumpForce.y);
+
+        Flip();
+
+        StopAllCoroutines();
+        StartCoroutine(WallJumpCooldown());
+    }
+    private IEnumerator WallJumpCooldown()
+    {
+        isWallJumping = true;
+
+        yield return new WaitForSeconds(wallJumpDuration);
+
+        isWallJumping = false;
+    }
     private void JumpButton()
     {
-        if(isGrounded)
+        if (isGrounded)
         {
             canDoubleJump = true;
             Jump();
@@ -162,6 +183,7 @@ public class Player : MonoBehaviour
             DoubleJump();
     }
 
+    //Movement
     private void HandleMovement()
     {
         if (isWallDetected)
@@ -173,6 +195,7 @@ public class Player : MonoBehaviour
         rb.linearVelocity = new Vector2(xInput * moveSpeed, rb.linearVelocityY);
     }
 
+    //Animation
     private void HandleAnimations()
     {
         anim.SetFloat("xVelocity", rb.linearVelocityX);
@@ -181,12 +204,12 @@ public class Player : MonoBehaviour
         anim.SetBool("isWallDetected", isWallDetected);
     }
 
+    //Flip
     private void HandleFlip()
     {
-        if (facingRight && xInput < 0  || !facingRight && xInput > 0)
+        if (facingRight && xInput < 0 || !facingRight && xInput > 0)
             Flip();
     }
-
     private void Flip()
     {
         facingDirection = facingDirection * -1;
@@ -194,14 +217,15 @@ public class Player : MonoBehaviour
         facingRight = !facingRight;
     }
 
+    //Collision
     private void HandleCollision()
     {
         isGrounded = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, whatIsGround);
-        isWallDetected = Physics2D.Raycast(transform.position, Vector2.right * facingDirection , wallCheckDistance, whatIsGround);
+        isWallDetected = Physics2D.Raycast(transform.position, Vector2.right * facingDirection, wallCheckDistance, whatIsGround);
     }
     private void OnDrawGizmos()
     {
-        Gizmos.DrawLine(transform.position, new Vector2(transform.position.x , transform.position.y - groundCheckDistance));
+        Gizmos.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y - groundCheckDistance));
         Gizmos.DrawLine(transform.position, new Vector2(transform.position.x + wallCheckDistance * facingDirection, transform.position.y));
     }
 }
