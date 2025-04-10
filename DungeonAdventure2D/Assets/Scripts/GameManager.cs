@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
     }
 
+    public void UpdateRespawnPoint(Transform RespawnPoint) => spawnPoint = RespawnPoint;
     public void SpawnPlayer() => StartCoroutine(SpawnCouroutine());
 
     private IEnumerator SpawnCouroutine()
