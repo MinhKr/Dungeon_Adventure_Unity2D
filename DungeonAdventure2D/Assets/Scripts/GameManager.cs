@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    [Header("Fruit")]
     public int fruitCollected;
 
     [Header("Player")]

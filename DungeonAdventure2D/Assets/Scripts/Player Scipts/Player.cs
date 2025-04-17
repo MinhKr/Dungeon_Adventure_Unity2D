@@ -60,7 +60,11 @@ public class Player : MonoBehaviour
     void Update()
     {
         if(canBeControlled == false)
+        {
+            HandleCollision();
+            HandleAnimations();
             return;
+        }
 
         if (isKnocked)
             return;
@@ -93,24 +97,48 @@ public class Player : MonoBehaviour
     }
 
     //Knockback
-    public void KnockBack()
+    public void KnockBack(float sourceDamageXPosition)
     {
+        float knockDir = 1;
+        if(transform.position.x < sourceDamageXPosition)
+            knockDir = -1;
+
         if (isKnocked)
             return;
 
         StartCoroutine(KnockBackCooldown());
-        anim.SetTrigger("knockback");
-        rb.linearVelocity = new Vector2(knockBackPower.x * -facingDirection, knockBackPower.y);
+
+        rb.linearVelocity = new Vector2(knockBackPower.x * knockDir, knockBackPower.y);
     }
     private IEnumerator KnockBackCooldown()
     {
-        canBeKnocked = false;
+        /*canBeKnocked = false;*/
         isKnocked = true;
+        anim.SetBool("isKnocked", isKnocked);    
 
         yield return new WaitForSeconds(knockBackDuration);
 
         isKnocked = false;
-        canBeKnocked = true;
+        anim.SetBool("isKnocked", isKnocked);
+        /*canBeKnocked = true;*/
+    }
+
+    //Push
+    public void Push(Vector2 pushDirection , float duration)
+    {
+        StartCoroutine(PushCoroutine(pushDirection, duration));
+    }
+
+    private IEnumerator PushCoroutine(Vector2 pushDirection , float duration)
+    {
+        canBeControlled = false;
+
+        rb.linearVelocity = Vector2.zero;
+        rb.AddForce(pushDirection, ForceMode2D.Impulse);
+
+        yield return new WaitForSeconds(duration);
+
+        canBeControlled = true;
     }
 
     public void Die()
