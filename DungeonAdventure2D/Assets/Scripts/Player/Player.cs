@@ -33,6 +33,10 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask whatIsGround;
     private bool isGrounded;
     private bool isWallDetected;
+    [Space]
+    [SerializeField] private LayerMask whatIsEnemy;
+    [SerializeField] private Transform enemyCheck;
+    [SerializeField] private float enemyCheckRadius;
 
     private float xInput;
     private float yInput;
@@ -59,7 +63,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(canBeControlled == false)
+        if (canBeControlled == false)
         {
             HandleCollision();
             HandleAnimations();
@@ -68,6 +72,8 @@ public class Player : MonoBehaviour
 
         if (isKnocked)
             return;
+
+        HandleEnemyCollision();
 
         HandleInput();
 
@@ -80,6 +86,21 @@ public class Player : MonoBehaviour
         HandleCollision();
 
         HandleAnimations();
+    }
+
+    private void HandleEnemyCollision()
+    {
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(enemyCheck.position, enemyCheckRadius, whatIsEnemy);
+
+        foreach (var enemy in enemies)
+        {
+            Enemy newEnemy = enemy.GetComponent<Enemy>();
+            if (newEnemy != null)
+            {
+                newEnemy.Die();
+                Jump();
+            }
+        }
     }
 
     public void RespawnFinished(bool finished)
@@ -100,7 +121,7 @@ public class Player : MonoBehaviour
     public void KnockBack(float sourceDamageXPosition)
     {
         float knockDir = 1;
-        if(transform.position.x < sourceDamageXPosition)
+        if (transform.position.x < sourceDamageXPosition)
             knockDir = -1;
 
         if (isKnocked)
@@ -113,7 +134,7 @@ public class Player : MonoBehaviour
     private IEnumerator KnockBackCooldown()
     {
         isKnocked = true;
-        anim.SetBool("isKnocked", isKnocked);    
+        anim.SetBool("isKnocked", isKnocked);
 
         yield return new WaitForSeconds(knockBackDuration);
 
@@ -122,12 +143,12 @@ public class Player : MonoBehaviour
     }
 
     //Push
-    public void Push(Vector2 pushDirection , float duration)
+    public void Push(Vector2 pushDirection, float duration)
     {
         StartCoroutine(PushCoroutine(pushDirection, duration));
     }
 
-    private IEnumerator PushCoroutine(Vector2 pushDirection , float duration)
+    private IEnumerator PushCoroutine(Vector2 pushDirection, float duration)
     {
         canBeControlled = false;
 
@@ -250,6 +271,7 @@ public class Player : MonoBehaviour
     }
     private void OnDrawGizmos()
     {
+        Gizmos.DrawWireSphere(enemyCheck.position, enemyCheckRadius);
         Gizmos.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y - groundCheckDistance));
         Gizmos.DrawLine(transform.position, new Vector2(transform.position.x + wallCheckDistance * facingDirection, transform.position.y));
     }
