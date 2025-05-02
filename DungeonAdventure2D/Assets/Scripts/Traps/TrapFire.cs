@@ -22,7 +22,9 @@ public class TrapFire : MonoBehaviour
 
     public void SwitchOffFire()
     {
-        if (isActive == false) return;
+        if (isActive == false) 
+            return;
+
         StartCoroutine(FireCouroutine());
     }
     private IEnumerator FireCouroutine()

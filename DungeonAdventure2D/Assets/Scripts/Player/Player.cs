@@ -112,7 +112,6 @@ public class Player : MonoBehaviour
     }
     private IEnumerator KnockBackCooldown()
     {
-        /*canBeKnocked = false;*/
         isKnocked = true;
         anim.SetBool("isKnocked", isKnocked);    
 
@@ -120,7 +119,6 @@ public class Player : MonoBehaviour
 
         isKnocked = false;
         anim.SetBool("isKnocked", isKnocked);
-        /*canBeKnocked = true;*/
     }
 
     //Push
@@ -155,7 +153,6 @@ public class Player : MonoBehaviour
             return;
 
         rb.linearVelocity = new Vector2(rb.linearVelocityX, rb.linearVelocityY * yModifier);
-
     }
     private void HandleInput()
     {
