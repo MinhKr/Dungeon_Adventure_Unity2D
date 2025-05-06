@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private float spawnDelay;
+    public Player player;
 
     private void Awake()
     {
@@ -28,6 +29,7 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(spawnDelay);
         GameObject newPlayer = Instantiate(playerPrefab, spawnPoint.position, Quaternion.identity);
+        player = newPlayer.GetComponent<Player>();
     }
 
     public void AddFruit()

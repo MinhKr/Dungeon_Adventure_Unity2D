@@ -4,13 +4,18 @@ public class Enemy : MonoBehaviour
 {
     protected Animator anim;
     protected Rigidbody2D rb;
+    protected Collider2D col;
 
+    [Header("General Properties")]
+    [SerializeField] protected Transform player;
+    [Space]
     [SerializeField] protected float moveSpeed = 2f;
     [SerializeField] protected float idleTime = 1.5f;
     protected float idleTimer;
+    protected bool canMove;
 
     [Header("Death Properties")]
-    [SerializeField] protected float deathImpact = 5f ;
+    [SerializeField] protected float deathImpact = 5f;
     [SerializeField] protected float deathRotationSpeed = 150f;
     protected float deathRotationAngle = 1;
     protected bool isDead;
@@ -21,6 +26,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected float groundCheckDistance;
     [SerializeField] protected float wallCheckDistance;
     [SerializeField] protected LayerMask whatIsGround;
+    [SerializeField] protected LayerMask whatIsPlayer;
     [SerializeField] protected Transform groundCheck;
     protected bool isGrounded;
     protected bool isWallDetected;
@@ -32,6 +38,12 @@ public class Enemy : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        col = GetComponent<Collider2D>();
+    }
+
+    protected virtual void Start()
+    {
+        InvokeRepeating(nameof(UpdatePlayerRef), 0, 1);
     }
 
     protected virtual void Update()
@@ -42,13 +54,21 @@ public class Enemy : MonoBehaviour
             HandleDeathRotation();
     }
 
+    private void UpdatePlayerRef()
+    {
+        if (player == null)
+            player = GameManager.instance.player.transform;
+    }
+
     //Death
     public virtual void Die()
     {
-        isDead = true;  
+        col.enabled = false;
+        isDead = true;
         anim.SetTrigger("hit");
         damageTrigger.SetActive(false);
         rb.linearVelocity = new Vector2(rb.linearVelocityX, deathImpact);
+        rb.gravityScale = 2f;
 
         if (Random.Range(0, 100) < 50)
             deathRotationAngle = deathRotationAngle * -1;
@@ -62,7 +82,7 @@ public class Enemy : MonoBehaviour
     //Flip
     protected virtual void HandleFlip(float xValue)
     {
-        if (facingRight && xValue < 0 || !facingRight && xValue > 0)
+        if (facingRight && xValue < transform.position.x || !facingRight && xValue > transform.position.x)
             Flip();
     }
     protected virtual void Flip()
@@ -78,7 +98,7 @@ public class Enemy : MonoBehaviour
         isGrounded = Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround);
         isWallDetected = Physics2D.Raycast(transform.position, Vector2.right * facingDirection, wallCheckDistance, whatIsGround);
     }
-    private void OnDrawGizmos()
+    protected virtual void OnDrawGizmos()
     {
         Gizmos.DrawLine(groundCheck.position, new Vector2(groundCheck.position.x, groundCheck.position.y - groundCheckDistance));
         Gizmos.DrawLine(transform.position, new Vector2(transform.position.x + wallCheckDistance * facingDirection, transform.position.y));
