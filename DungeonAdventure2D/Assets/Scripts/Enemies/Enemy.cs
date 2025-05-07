@@ -4,7 +4,8 @@ public class Enemy : MonoBehaviour
 {
     protected Animator anim;
     protected Rigidbody2D rb;
-    [SerializeField] protected Collider2D[] col;
+    protected Collider2D[] col;
+    protected SpriteRenderer sr => GetComponent<SpriteRenderer>();
 
     [Header("General Properties")]
     [SerializeField] protected Transform player;
@@ -44,6 +45,13 @@ public class Enemy : MonoBehaviour
     protected virtual void Start()
     {
         InvokeRepeating(nameof(UpdatePlayerRef), 0, 1);
+
+        if (sr.flipX == true && !facingRight)
+        {
+            Flip();
+            sr.flipX = false;
+        }
+
     }
 
     protected virtual void Update()
@@ -98,6 +106,12 @@ public class Enemy : MonoBehaviour
         facingDirection = facingDirection * -1;
         transform.Rotate(0.0f, 180.0f, 0.0f);
         facingRight = !facingRight;
+    }
+
+    [ContextMenu("Change Facing Direction")]
+    public void FacingDirectionDefault()
+    {
+        sr.flipX = !sr.flipX;
     }
 
     //Collision
