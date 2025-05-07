@@ -5,12 +5,9 @@ public class EnemyMushroom : Enemy
     protected override void Update()
     {
         base.Update();
-        anim.SetFloat("xVelocity", rb.linearVelocityX);
 
         if (isDead)
             return;
-
-        HandleCollision();
 
         HandleMovement();
 

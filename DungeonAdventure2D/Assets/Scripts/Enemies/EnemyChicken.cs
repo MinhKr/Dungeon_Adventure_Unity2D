@@ -3,16 +3,13 @@ using UnityEngine;
 public class EnemyChicken : Enemy
 {
     [Header("Chicken Properties")]
-    [SerializeField] private float detectionRange;
     [SerializeField] private float agroDuration;
     private float agroTimer;
-    private bool playerDetected;
     private bool canFlip = true;
 
     protected override void Update()
     {
         base.Update();
-        anim.SetFloat("xVelocity", rb.linearVelocityX);
 
         if (isDead)
             return;
@@ -27,8 +24,6 @@ public class EnemyChicken : Enemy
 
         if (agroTimer <= 0)
             canMove = false;
-
-        HandleCollision();
 
         HandleMovement();
 
@@ -72,19 +67,5 @@ public class EnemyChicken : Enemy
     {
         base.Flip();
         canFlip = true;
-    }
-
-    protected override void HandleCollision()
-    {
-        base.HandleCollision();
-
-        playerDetected = Physics2D.Raycast(transform.position, Vector2.right * facingDirection, detectionRange, whatIsPlayer);
-    }
-
-    protected override void OnDrawGizmos()
-    {
-        base.OnDrawGizmos();
-
-        Gizmos.DrawLine(transform.position, new Vector2(transform.position.x + detectionRange * facingDirection, transform.position.y));
     }
 }
