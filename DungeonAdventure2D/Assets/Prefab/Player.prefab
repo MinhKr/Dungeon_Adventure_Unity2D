@@ -143,9 +143,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7eeff6c0d1c0e43468029a8926d52e1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 8
-  jumpForce: 14
-  doubleJumpForce: 11
+  moveSpeed: 10
+  jumpForce: 15
+  doubleJumpForce: 13
   wallJumpDuration: 0.6
   wallJumpForce: {x: 7, y: 14}
   knockBackPower: {x: 5, y: 7}

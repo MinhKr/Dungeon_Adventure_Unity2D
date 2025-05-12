@@ -36,11 +36,11 @@ public class TrapSaw : MonoBehaviour
 
         if (Vector2.Distance(transform.position, wayPoint[wayPointIndex].position) < 0.1f)
         {
-            if(wayPointIndex == 0 || wayPointIndex == (wayPoint.Length - 1))
+            if (wayPointIndex == 0 || wayPointIndex == (wayPoint.Length - 1))
             {
                 moveDirection = moveDirection * -1;
                 StartCoroutine(StopMovement(delayTime));
-            }  
+            }
 
             wayPointIndex = wayPointIndex + moveDirection;
         }
