@@ -47,6 +47,10 @@ public class Player : MonoBehaviour
     [Header("VFX")]
     [SerializeField] private GameObject deathVfx;
 
+    [Header("Player Visuals")]
+    [SerializeField] private AnimatorOverrideController[] animators;
+    [SerializeField] private int skinId;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
@@ -58,6 +62,8 @@ public class Player : MonoBehaviour
     {
         defaultGravityScale = rb.gravityScale;
         RespawnFinished(false);
+
+        ChooseSkin(SkinManager.instance.skinIndex);
     }
 
     // Update is called once per frame
@@ -248,6 +254,11 @@ public class Player : MonoBehaviour
         anim.SetFloat("yVelocity", rb.linearVelocityY);
         anim.SetBool("isGrounded", isGrounded);
         anim.SetBool("isWallDetected", isWallDetected);
+    }
+
+    public void ChooseSkin(int skinIndex)
+    {
+        anim.runtimeAnimatorController = animators[skinIndex];
     }
 
     //Flip

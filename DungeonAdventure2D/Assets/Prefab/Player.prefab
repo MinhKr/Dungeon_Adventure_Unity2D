@@ -143,7 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7eeff6c0d1c0e43468029a8926d52e1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
+  moveSpeed: 9.5
   jumpForce: 15
   doubleJumpForce: 13
   wallJumpDuration: 0.6
@@ -161,6 +161,12 @@ MonoBehaviour:
   enemyCheck: {fileID: 5153024762117565186}
   enemyCheckRadius: 0.4
   deathVfx: {fileID: 2651844291182913644, guid: 0188456ff254f8840a5c1ed63b20642b, type: 3}
+  animators:
+  - {fileID: 22100000, guid: a97b0dacf11579143a503b73847918d9, type: 2}
+  - {fileID: 22100000, guid: 5e34aad5cf8b89c4bbc53c5b0eabe1bc, type: 2}
+  - {fileID: 22100000, guid: 9c9b5391356b364478cec22a0f17944c, type: 2}
+  - {fileID: 22100000, guid: da7cb63b9f576694aba04db510de1644, type: 2}
+  skinId: 0
 --- !u!1 &8620592276973875815
 GameObject:
   m_ObjectHideFlags: 0
