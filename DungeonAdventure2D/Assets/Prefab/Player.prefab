@@ -147,7 +147,7 @@ MonoBehaviour:
   jumpForce: 15
   doubleJumpForce: 13
   wallJumpDuration: 0.6
-  wallJumpForce: {x: 7, y: 14}
+  wallJumpForce: {x: 5, y: 14}
   knockBackPower: {x: 5, y: 7}
   knockBackDuration: 0.6
   groundCheckDistance: 0.8
@@ -160,7 +160,7 @@ MonoBehaviour:
     m_Bits: 64
   enemyCheck: {fileID: 5153024762117565186}
   enemyCheckRadius: 0.4
-  deathVfx: {fileID: 2651844291182913644, guid: 0188456ff254f8840a5c1ed63b20642b, type: 3}
+  startingHealth: 7
   animators:
   - {fileID: 22100000, guid: a97b0dacf11579143a503b73847918d9, type: 2}
   - {fileID: 22100000, guid: 5e34aad5cf8b89c4bbc53c5b0eabe1bc, type: 2}

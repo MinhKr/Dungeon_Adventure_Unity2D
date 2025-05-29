@@ -38,25 +38,25 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform enemyCheck;
     [SerializeField] private float enemyCheckRadius;
 
+    [Header("Health Properties")]
+    [SerializeField] private float startingHealth;
+    [SerializeField] public float currentHealth { get; private set; }
+
     private float xInput;
     private float yInput;
 
     private bool facingRight = true;
     private int facingDirection = 1;
 
-    [Header("VFX")]
-    [SerializeField] private GameObject deathVfx;
-
     [Header("Player Visuals")]
     [SerializeField] private AnimatorOverrideController[] animators;
     [SerializeField] private int skinId;
 
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponentInChildren<Animator>();
+        currentHealth = startingHealth;
     }
     void Start()
     {
@@ -66,7 +66,6 @@ public class Player : MonoBehaviour
         ChooseSkin(SkinManager.instance.skinIndex);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (canBeControlled == false)
@@ -133,6 +132,8 @@ public class Player : MonoBehaviour
         if (isKnocked)
             return;
 
+        CameraManager.instance.ShakeCamera();   
+
         StartCoroutine(KnockBackCooldown());
 
         rb.linearVelocity = new Vector2(knockBackPower.x * knockDir, knockBackPower.y);
@@ -146,6 +147,16 @@ public class Player : MonoBehaviour
 
         isKnocked = false;
         anim.SetBool("isKnocked", isKnocked);
+    }
+
+    //Take Dame , Minus Health
+    public void TakeDamage(float damage)
+    {
+        currentHealth += damage;// Take damage and minus Health but i use raw image , increase Health to visualize the image
+        if (currentHealth == 10)// i have ten hearts in original image
+        {
+            GameManager.instance.Die();
+        }
     }
 
     //Push
@@ -166,11 +177,7 @@ public class Player : MonoBehaviour
         canBeControlled = true;
     }
 
-    public void Die()
-    {
-        Destroy(gameObject);
-        GameObject newDeathVfx = Instantiate(deathVfx, transform.position, Quaternion.identity);
-    }
+
     private void HandleWallSlide()
     {
         bool canWallSlide = isWallDetected && rb.linearVelocity.y < 0;

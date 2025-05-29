@@ -7,8 +7,7 @@ public class Deadzone : MonoBehaviour
         Player player = collision.GetComponent<Player>();
         if (player != null)
         {
-            player.Die();
-            GameManager.instance.SpawnPlayer();
+            GameManager.instance.Die();
         }
     }
 }
