@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class HealthBarSystem : MonoBehaviour
 {
-    private Player playerHealth;
+    /*private Player playerHealth;
     [SerializeField] private RawImage HealthbarTotal;
     [SerializeField] private RawImage HealthbarCurrent;
 
@@ -27,5 +27,5 @@ public class HealthBarSystem : MonoBehaviour
     {
         if (playerHealth == null)
             playerHealth = FindFirstObjectByType<Player>();
-    }
+    }*/
 }

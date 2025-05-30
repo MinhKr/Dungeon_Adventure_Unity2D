@@ -56,7 +56,11 @@ public class Player : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponentInChildren<Animator>();
+
         currentHealth = startingHealth;
+        UIingame.instance.HealthbarTotal.uvRect = new Rect(startingHealth / 10f, 0, 1, 1);
+        UIingame.instance.HealthbarCurrent.uvRect = new Rect(currentHealth / 10f, 0, 1, 1);
+
     }
     void Start()
     {
@@ -132,7 +136,7 @@ public class Player : MonoBehaviour
         if (isKnocked)
             return;
 
-        CameraManager.instance.ShakeCamera();   
+        CameraManager.instance.ShakeCamera();
 
         StartCoroutine(KnockBackCooldown());
 
@@ -152,7 +156,8 @@ public class Player : MonoBehaviour
     //Take Dame , Minus Health
     public void TakeDamage(float damage)
     {
-        currentHealth += damage;// Take damage and minus Health but i use raw image , increase Health to visualize the image
+        currentHealth += damage;
+        UIingame.instance.HealthbarCurrent.uvRect = new Rect(currentHealth / 10f, 0, 1, 1);// Take damage and minus Health but i use raw image , increase Health to visualize the image
         if (currentHealth == 10)// i have ten hearts in original image
         {
             GameManager.instance.Die();
