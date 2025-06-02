@@ -7,12 +7,24 @@ public class UIingame : MonoBehaviour
 {
     public static UIingame instance;
 
+    [Header("Player Health UI")]
     private Player playerHealth;
     [SerializeField] public RawImage HealthbarTotal;
     [SerializeField] public RawImage HealthbarCurrent;
 
     [SerializeField] private TextMeshProUGUI fruitText;
 
+    [Header("Player Death Info UI")]
+    [SerializeField] private TextMeshProUGUI deathFruitCollectedText;
+    [SerializeField] private TextMeshProUGUI deathLevelText;
+    [SerializeField] private GameObject deathUI;
+
+    [Header("Complete UI")]
+    [SerializeField] private TextMeshProUGUI completedFruitCollectedText;
+    [SerializeField] private TextMeshProUGUI completedLevelText;
+    [SerializeField] private GameObject completedUI;
+
+    [Space]
     [SerializeField] private GameObject pauseMenu;
     private bool isPaused;
     private void Awake()
@@ -76,6 +88,7 @@ public class UIingame : MonoBehaviour
 
     public void GoToMainMenuUI()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(0);
     }
 
@@ -85,4 +98,33 @@ public class UIingame : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+    public void NextLevel()
+    {
+        Time.timeScale = 1f;
+        int nextLevelIndex = SceneManager.GetActiveScene().buildIndex + 1;
+        if (nextLevelIndex < SceneManager.sceneCountInBuildSettings)
+        {
+            SceneManager.LoadScene(nextLevelIndex);
+        }
+        else
+        {
+            SceneManager.LoadScene(0);
+        }
+    }
+
+    public void ShowDeathUI(int fruitCollected)
+    {
+        Time.timeScale = 0f;
+        deathFruitCollectedText.text = fruitCollected.ToString();
+        deathLevelText.text = SceneManager.GetActiveScene().name;
+        deathUI.SetActive(true);
+    }
+
+    public void ShowCompletedUI(int fruitCollected)
+    {
+        Time.timeScale = 0f;
+        completedFruitCollectedText.text = fruitCollected.ToString();
+        completedLevelText.text = SceneManager.GetActiveScene().name;
+        completedUI.SetActive(true);
+    }
 }

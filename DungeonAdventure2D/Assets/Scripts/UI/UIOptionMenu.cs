@@ -5,6 +5,11 @@ public class UIOptionMenu : MonoBehaviour
     [SerializeField] private int curentSkinIndex;
     [SerializeField] private Animator skinDisplay;
 
+    private void OnEnable()
+    {
+        curentSkinIndex = SkinManager.instance.skinIndex;
+        UpdateSkinDisplay();
+    }
     public void NextSkin()
     {
         curentSkinIndex++;

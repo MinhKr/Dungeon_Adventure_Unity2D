@@ -1,8 +1,10 @@
+using System.Collections;
 using UnityEngine;
 
 public class FinishPoint : MonoBehaviour
 {
     private Animator anim => GetComponent<Animator>();
+    private float timeDelay = 0.5f;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -11,7 +13,14 @@ public class FinishPoint : MonoBehaviour
         if(player != null)
         {
             anim.SetTrigger("activate");
-            Debug.Log("Completed level");
+            StartCoroutine(ShowCompleteUICouroutine());
         }
     }
+    private IEnumerator ShowCompleteUICouroutine()
+    {
+        yield return new WaitForSeconds(timeDelay);
+
+        UIingame.instance.ShowCompletedUI(GameManager.instance.fruitCollected);
+    }
+
 }

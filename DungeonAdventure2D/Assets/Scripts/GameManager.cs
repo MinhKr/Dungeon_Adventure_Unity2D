@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     [Header("Cinemachine Camera")]
     [SerializeField] private CinemachineCamera cinemachineCamera;
 
+    private float timeDelay = 0.5f; 
+
     private void Awake()
     {
         if (instance == null)
@@ -64,6 +66,17 @@ public class GameManager : MonoBehaviour
     {
         GameObject newDeathVfx = Instantiate(deathVfx, newPlayer.transform.position, Quaternion.identity);
         Destroy(newPlayer);
-        SpawnPlayer();
+        StartCoroutine(ShowDeathUICouroutine());
+        /* SpawnPlayer();*/
+    }
+
+    private IEnumerator ShowDeathUICouroutine()
+    {
+        yield return new WaitForSeconds(timeDelay);
+
+        if (UIingame.instance != null)
+        {
+            UIingame.instance.ShowDeathUI(fruitCollected);
+        }
     }
 }
