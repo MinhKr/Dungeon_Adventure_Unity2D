@@ -19,9 +19,11 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Player player = collision.gameObject.GetComponent<Player>();
         if (collision.gameObject.layer == LayerMask.NameToLayer(playerLayer))
         {
-            collision.gameObject.GetComponent<Player>().KnockBack(transform.position.x);
+            player.KnockBack(transform.position.x);
+            player.TakeDamage(1);
             Destroy(gameObject);
         }
 

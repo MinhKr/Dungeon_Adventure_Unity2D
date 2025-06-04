@@ -106,6 +106,7 @@ public class Player : MonoBehaviour
             Enemy newEnemy = enemy.GetComponent<Enemy>();
             if (newEnemy != null)
             {
+                AudioManager.instance.PlaySFX(1);
                 newEnemy.Die();
                 Jump();
             }
@@ -118,6 +119,7 @@ public class Player : MonoBehaviour
         {
             rb.gravityScale = defaultGravityScale;
             canBeControlled = true;
+            AudioManager.instance.PlaySFX(11);
         }
         else
         {
@@ -136,6 +138,7 @@ public class Player : MonoBehaviour
         if (isKnocked)
             return;
 
+        AudioManager.instance.PlaySFX(9);
         CameraManager.instance.ShakeCamera();
 
         StartCoroutine(KnockBackCooldown());
@@ -207,10 +210,12 @@ public class Player : MonoBehaviour
     //Jumping
     private void Jump()
     {
+        AudioManager.instance.PlaySFX(3);
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
     }
     private void DoubleJump()
     {
+        AudioManager.instance.PlaySFX(3);
         isWallJumping = false;
         canDoubleJump = false;
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, doubleJumpForce);

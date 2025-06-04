@@ -6,7 +6,7 @@ public class LevelButton : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI levelNumberText;
     private int levelIndex;
-    public string sceneName;
+    private string sceneName;
 
     public void SetUpLevelButton(int newLevelIndex)
     {
@@ -17,6 +17,7 @@ public class LevelButton : MonoBehaviour
 
     public void LoadLevel()
     {
+        AudioManager.instance.PlaySFX(4);
         SceneManager.LoadScene(sceneName);
     }
 }

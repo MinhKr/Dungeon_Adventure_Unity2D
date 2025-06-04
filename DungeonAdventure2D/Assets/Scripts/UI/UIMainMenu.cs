@@ -17,5 +17,7 @@ public class UIMainMenu : MonoBehaviour
             ui.SetActive(false);
         }
         uiToEnable.SetActive(true);
+
+        AudioManager.instance.PlaySFX(4);
     }
 }

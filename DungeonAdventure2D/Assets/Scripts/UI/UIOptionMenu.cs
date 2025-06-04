@@ -17,6 +17,7 @@ public class UIOptionMenu : MonoBehaviour
         {
             curentSkinIndex = 0;
         }
+        AudioManager.instance.PlaySFX(5);
         UpdateSkinDisplay();
     }
 
@@ -27,6 +28,7 @@ public class UIOptionMenu : MonoBehaviour
         {
             curentSkinIndex = 3;
         }
+        AudioManager.instance.PlaySFX(5);
         UpdateSkinDisplay();
     }
 
@@ -36,12 +38,12 @@ public class UIOptionMenu : MonoBehaviour
         {
             skinDisplay.SetLayerWeight(i, 0);
         }
-
         skinDisplay.SetLayerWeight(curentSkinIndex, 1);
     }
 
     public void ChooseSkin()
     {
         SkinManager.instance.SetSkinIndex(curentSkinIndex);
+        AudioManager.instance.PlaySFX(5);
     }
 }
