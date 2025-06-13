@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject deathVfx;
 
     [Header("Cinemachine Camera")]
-    [SerializeField] private CinemachineCamera cinemachineCamera;
+    private CinemachineCamera cinemachineCamera;
 
     private float timeDelay = 0.5f; 
 

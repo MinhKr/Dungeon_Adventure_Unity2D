@@ -20315,10 +20315,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5041531238227823391, guid: e17d2cc20469c4d41bd81d188b6ef46a, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: NextLevel
-      objectReference: {fileID: 0}
     - target: {fileID: 8629118437492856117, guid: e17d2cc20469c4d41bd81d188b6ef46a, type: 3}
       propertyPath: m_Name
       value: UICanvas
