@@ -35,7 +35,7 @@ public class EnemyPlant : Enemy
         Destroy(newBullet.gameObject, 5);
     }
 
-    protected override void HandleAnimtion()
+    protected override void HandleAnimation()
     {
         //empty
     }

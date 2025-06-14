@@ -57,7 +57,7 @@ public class Enemy : MonoBehaviour
     protected virtual void Update()
     {
         HandleCollision();
-        HandleAnimtion();
+        HandleAnimation();
 
         idleTimer -= Time.deltaTime;
 
@@ -71,7 +71,7 @@ public class Enemy : MonoBehaviour
             player = GameManager.instance.player.transform;
     }
 
-    protected virtual void HandleAnimtion()
+    protected virtual void HandleAnimation()
     {
         anim.SetFloat("xVelocity", rb.linearVelocity.x);
     }
@@ -79,6 +79,8 @@ public class Enemy : MonoBehaviour
     //Death
     public virtual void Die()
     {
+        if(rb.bodyType == RigidbodyType2D.Kinematic)
+            rb.bodyType = RigidbodyType2D.Dynamic;
         foreach (var collider in col)
             collider.enabled = false;
 
@@ -88,6 +90,8 @@ public class Enemy : MonoBehaviour
 
         if (Random.Range(0, 100) < 50)
             deathRotationAngle = deathRotationAngle * -1;
+
+        canMove = false;
     }
 
     private void HandleDeathRotation()
