@@ -112,7 +112,6 @@ public class Player : MonoBehaviour
             }
         }
     }
-
     public void RespawnFinished(bool finished)
     {
         if (finished)
@@ -127,7 +126,6 @@ public class Player : MonoBehaviour
             canBeControlled = false;
         }
     }
-
     //Knockback
     public void KnockBack(float sourceDamageXPosition)
     {
@@ -155,7 +153,6 @@ public class Player : MonoBehaviour
         isKnocked = false;
         anim.SetBool("isKnocked", isKnocked);
     }
-
     //Take Dame , Minus Health
     public void TakeDamage(float damage)
     {
@@ -166,13 +163,11 @@ public class Player : MonoBehaviour
             GameManager.instance.Die();
         }
     }
-
     //Push
     public void Push(Vector2 pushDirection, float duration)
     {
         StartCoroutine(PushCoroutine(pushDirection, duration));
     }
-
     private IEnumerator PushCoroutine(Vector2 pushDirection, float duration)
     {
         canBeControlled = false;
@@ -184,8 +179,6 @@ public class Player : MonoBehaviour
 
         canBeControlled = true;
     }
-
-
     private void HandleWallSlide()
     {
         bool canWallSlide = isWallDetected && rb.linearVelocity.y < 0;
@@ -206,7 +199,6 @@ public class Player : MonoBehaviour
             JumpButton();
         }
     }
-
     //Jumping
     private void Jump()
     {
@@ -251,7 +243,6 @@ public class Player : MonoBehaviour
         else if (canDoubleJump)
             DoubleJump();
     }
-
     //Movement
     private void HandleMovement()
     {
@@ -263,7 +254,6 @@ public class Player : MonoBehaviour
 
         rb.linearVelocity = new Vector2(xInput * moveSpeed, rb.linearVelocityY);
     }
-
     //Animation
     private void HandleAnimations()
     {
@@ -272,12 +262,10 @@ public class Player : MonoBehaviour
         anim.SetBool("isGrounded", isGrounded);
         anim.SetBool("isWallDetected", isWallDetected);
     }
-
     public void ChooseSkin(int skinIndex)
     {
         anim.runtimeAnimatorController = animators[skinIndex];
     }
-
     //Flip
     private void HandleFlip()
     {
@@ -290,7 +278,6 @@ public class Player : MonoBehaviour
         transform.Rotate(0.0f, 180.0f, 0.0f);
         facingRight = !facingRight;
     }
-
     //Collision
     private void HandleCollision()
     {
