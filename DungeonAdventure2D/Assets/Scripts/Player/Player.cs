@@ -51,6 +51,7 @@ public class Player : MonoBehaviour
     [Header("Player Visuals")]
     [SerializeField] private AnimatorOverrideController[] animators;
     [SerializeField] private int skinId;
+    [SerializeField] private ParticleSystem dustFx;
 
     private void Awake()
     {
@@ -147,6 +148,7 @@ public class Player : MonoBehaviour
     {
         isKnocked = true;
         anim.SetBool("isKnocked", isKnocked);
+        dustFx.Play();
 
         yield return new WaitForSeconds(knockBackDuration);
 
@@ -251,6 +253,11 @@ public class Player : MonoBehaviour
 
         if (isWallJumping)
             return;
+
+        if (xInput != 0 && isGrounded)
+        {
+            dustFx.Play();
+        }
 
         rb.linearVelocity = new Vector2(xInput * moveSpeed, rb.linearVelocityY);
     }
