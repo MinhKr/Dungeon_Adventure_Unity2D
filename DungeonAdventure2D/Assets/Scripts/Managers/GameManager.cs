@@ -9,6 +9,9 @@ public class GameManager : MonoBehaviour
     [Header("Fruit")]
     public int fruitCollected;
 
+    [Header("Star")]
+    public int starCollected;
+
     [Header("Player")]
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private Transform spawnPoint;
@@ -60,6 +63,12 @@ public class GameManager : MonoBehaviour
     {
         fruitCollected++;
         UIingame.instance.UpdateFruitText(fruitCollected);
+    }
+
+    public void AddStar()
+    {
+        starCollected++;
+        UIingame.instance.starSystemHUD.UpdateImageStar(starCollected);
     }
 
     public void Die()

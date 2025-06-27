@@ -21,7 +21,6 @@ public class Star : MonoBehaviour
     {
         HandleMovement();
     }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Player player = collision.GetComponent<Player>();
@@ -29,11 +28,11 @@ public class Star : MonoBehaviour
         if (player != null)
         {
             AudioManager.instance.PlaySFX(8);
+            GameManager.instance.AddStar();
             Destroy(gameObject);
             GameObject newPickupVfx = Instantiate(pickupVfx, transform.position, Quaternion.identity);
         }
     }
-
     private void SetUpwayPoints()
     {
         wayPoints = new Vector3[2];

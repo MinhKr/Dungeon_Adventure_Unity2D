@@ -22,7 +22,11 @@ public class UIingame : MonoBehaviour
     [Header("Complete UI")]
     [SerializeField] private TextMeshProUGUI completedFruitCollectedText;
     [SerializeField] private TextMeshProUGUI completedLevelText;
+    [SerializeField] private StarSystem starSystemComplete;
     [SerializeField] private GameObject completedUI;
+
+    [Header("Star HUD")]
+    [SerializeField] public StarSystem starSystemHUD;
 
     [Space]
     [SerializeField] private GameObject pauseMenu;
@@ -123,6 +127,7 @@ public class UIingame : MonoBehaviour
     public void ShowCompletedUI(int fruitCollected)
     {
         Time.timeScale = 0f;
+        starSystemComplete.UpdateImageStar(GameManager.instance.starCollected);
         completedFruitCollectedText.text = fruitCollected.ToString();
         completedLevelText.text = SceneManager.GetActiveScene().name;
         completedUI.SetActive(true);

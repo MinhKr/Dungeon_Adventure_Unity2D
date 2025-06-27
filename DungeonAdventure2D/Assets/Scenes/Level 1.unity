@@ -18313,6 +18313,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fruitCollected: 0
+  starCollected: 0
   playerPrefab: {fileID: 5442646644072937286, guid: 4ccc73a10df8539429ae1eb97e0b4d31, type: 3}
   spawnPoint: {fileID: 667922396}
   spawnDelay: 1.5
@@ -20391,10 +20392,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3306051338863863655, guid: e17d2cc20469c4d41bd81d188b6ef46a, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4149051240673713685, guid: e17d2cc20469c4d41bd81d188b6ef46a, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -20475,53 +20472,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6147450609205546703, guid: e17d2cc20469c4d41bd81d188b6ef46a, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6147450609205546703, guid: e17d2cc20469c4d41bd81d188b6ef46a, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6147450609205546703, guid: e17d2cc20469c4d41bd81d188b6ef46a, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6544457570817067456, guid: e17d2cc20469c4d41bd81d188b6ef46a, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7848766263682013900, guid: e17d2cc20469c4d41bd81d188b6ef46a, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7848766263682013900, guid: e17d2cc20469c4d41bd81d188b6ef46a, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7848766263682013900, guid: e17d2cc20469c4d41bd81d188b6ef46a, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8540200831097135325, guid: e17d2cc20469c4d41bd81d188b6ef46a, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8540200831097135325, guid: e17d2cc20469c4d41bd81d188b6ef46a, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8629118437492856117, guid: e17d2cc20469c4d41bd81d188b6ef46a, type: 3}
       propertyPath: m_Name
       value: UICanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 9113186893677730768, guid: e17d2cc20469c4d41bd81d188b6ef46a, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9113186893677730768, guid: e17d2cc20469c4d41bd81d188b6ef46a, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
