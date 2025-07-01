@@ -37,6 +37,5 @@ public class EnemyPlant : Enemy
 
     protected override void HandleAnimation()
     {
-        //empty
     }
 }

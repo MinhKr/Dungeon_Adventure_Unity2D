@@ -110,6 +110,7 @@ public class Player : MonoBehaviour
                 AudioManager.instance.PlaySFX(1);
                 newEnemy.Die();
                 Jump();
+                Destroy(enemy.gameObject, 4f);
             }
         }
     }

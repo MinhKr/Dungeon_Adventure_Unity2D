@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyBat : Enemy
 {
@@ -59,13 +59,32 @@ public class EnemyBat : Enemy
     {
         if (targetCollider == null && canDetectPlayer)
         {
-            targetCollider = Physics2D.OverlapCircle(transform.position, attackRange, whatIsPlayer);
+            /*targetCollider = Physics2D.OverlapCircle(transform.position, attackRange, whatIsPlayer);
 
             if (targetCollider != null)
             {
                 canDetectPlayer = false;
                 destination = targetCollider.transform.position;
                 anim.SetBool("isFlying", true);
+            }*/
+            Collider2D hit = Physics2D.OverlapCircle(transform.position, attackRange, whatIsPlayer);
+
+            if (hit != null)
+            {
+                // calculate the direction to the player
+                Vector2 toPlayer = (hit.transform.position - transform.position).normalized;
+
+                // angle between the down vector (Vector2.down) and the direction to the player
+                float angle = Vector2.Angle(Vector2.down, toPlayer);
+
+                // detect player only if the angle is less than 90 degrees
+                if (angle < 90f)
+                {
+                    targetCollider = hit;
+                    canDetectPlayer = false;
+                    destination = hit.transform.position;
+                    anim.SetBool("isFlying", true);
+                }
             }
         }
     }

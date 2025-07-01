@@ -79,13 +79,14 @@ public class Enemy : MonoBehaviour
     //Death
     public virtual void Die()
     {
+        isDead = true;
         if(rb.bodyType == RigidbodyType2D.Kinematic)
             rb.bodyType = RigidbodyType2D.Dynamic;
         foreach (var collider in col)
             collider.enabled = false;
 
-        isDead = true;
         anim.SetTrigger("hit");
+
         rb.linearVelocity = new Vector2(rb.linearVelocityX, deathImpact);
 
         if (Random.Range(0, 100) < 50)
