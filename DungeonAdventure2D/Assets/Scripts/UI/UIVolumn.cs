@@ -17,7 +17,7 @@ public class UIVolumn : MonoBehaviour
 
     public void BGMSliderValue(float value)
     {
-        float newValue = Mathf.Log10(value) * mixerMultiplier; // Convert linear value to logarithmic scale
+        float newValue = Mathf.Log10(value) * mixerMultiplier;
         audioMixer.SetFloat(bgmParameter, newValue);
     }
     public void SFXSliderValue(float value)

@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private float spawnDelay;
     public Player player;
-    private GameObject newPlayer;// use this to spawn the player
+    private GameObject newPlayer;
 
     [Header("VFX")]
     [SerializeField] private GameObject deathVfx;
@@ -47,16 +47,17 @@ public class GameManager : MonoBehaviour
     {
         newPlayer = Instantiate(playerPrefab, spawnPoint.position, Quaternion.identity);
         cinemachineCamera.Follow = newPlayer.transform;
+        player = newPlayer.GetComponent<Player>();
     }
 
     public void UpdateRespawnPoint(Transform RespawnPoint) => spawnPoint = RespawnPoint;
-    public void SpawnPlayer() => StartCoroutine(SpawnCouroutine());
 
+    //no more use
+    public void SpawnPlayer() => StartCoroutine(SpawnCouroutine());
     private IEnumerator SpawnCouroutine()
     {
         yield return new WaitForSeconds(spawnDelay);
-        SetupPlayer();
-        player = newPlayer.GetComponent<Player>();
+        SetupPlayer();  
     }
 
     public void AddFruit()

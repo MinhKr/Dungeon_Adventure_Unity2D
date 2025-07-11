@@ -71,13 +71,10 @@ public class EnemyBat : Enemy
 
             if (hit != null)
             {
-                // calculate the direction to the player
                 Vector2 toPlayer = (hit.transform.position - transform.position).normalized;
-
-                // angle between the down vector (Vector2.down) and the direction to the player
+ 
                 float angle = Vector2.Angle(Vector2.down, toPlayer);
-
-                // detect player only if the angle is less than 90 degrees
+              
                 if (angle < 90f)
                 {
                     targetCollider = hit;

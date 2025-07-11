@@ -40,7 +40,7 @@ public class Player : MonoBehaviour
 
     [Header("Health Properties")]
     [SerializeField] private float startingHealth;
-    [SerializeField] public float currentHealth { get; private set; }
+    [SerializeField] private float currentHealth;
 
     private float xInput;
     private float yInput;
