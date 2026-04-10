@@ -45,6 +45,10 @@ public class GameManager : MonoBehaviour
 
     private void SetupPlayer()
     {
+        if (newPlayer != null)
+        {
+            Destroy(newPlayer);
+        }
         newPlayer = Instantiate(playerPrefab, spawnPoint.position, Quaternion.identity);
         cinemachineCamera.Follow = newPlayer.transform;
         player = newPlayer.GetComponent<Player>();
@@ -52,7 +56,6 @@ public class GameManager : MonoBehaviour
 
     public void UpdateRespawnPoint(Transform RespawnPoint) => spawnPoint = RespawnPoint;
 
-    //no more use
     public void SpawnPlayer() => StartCoroutine(SpawnCouroutine());
     private IEnumerator SpawnCouroutine()
     {
@@ -75,7 +78,7 @@ public class GameManager : MonoBehaviour
     public void Die()
     {
         GameObject newDeathVfx = Instantiate(deathVfx, newPlayer.transform.position, Quaternion.identity);
-        Destroy(newPlayer);
+        newPlayer.SetActive(false); 
         StartCoroutine(ShowDeathUICouroutine());
         /* SpawnPlayer();*/
     }

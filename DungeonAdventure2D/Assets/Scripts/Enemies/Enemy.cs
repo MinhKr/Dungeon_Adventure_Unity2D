@@ -51,7 +51,6 @@ public class Enemy : MonoBehaviour
             Flip();
             sr.flipX = false;
         }
-
     }
 
     protected virtual void Update()
@@ -68,7 +67,12 @@ public class Enemy : MonoBehaviour
     private void UpdatePlayerRef()
     {
         if (player == null)
+        {
+            /*Transform vector3 = GameManager.instance.player.transform;
+            if (vector3 != null)
+                player = vector3;*/
             player = GameManager.instance.player.transform;
+        }
     }
 
     protected virtual void HandleAnimation()
